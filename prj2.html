@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../../assets/styles/article.css" rel="stylesheet" type="text/css" />
+  <title>Project 2 A Pretty Printer</title>
+
+</head>
+<body>
+<div id="page">
+<span id="opennav"><i class="material-icons">&#xe5d2;</i></span>
+<div id="nav">
+<div id="closenav"><i class="material-icons">&#xe5cd;</i></div>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../docs/index.html">Documentation</a></li>
+<li><a href="../../exams-quizzes/index.html">Exams & Quizzes</a></li>
+<li><a href="../../hws/index.html">Homeworks</a></li>
+<li><a href="../../misc/index.html">Miscellaneous</a></li>
+<li><a href="../../projects/index.html">Projects</a></li>
+<li><a href="../../slides/index.html">Slides</a></li>
+
+</ul>
+</div> <!-- #nav -->
+<div id="main">
+  <div id="header">
+<h1>Compiler Design</h1>
+</div> <!-- #header -->
+<div id="content">
+<section data-coord="prj2.umt:1:0"><h1 data-coord="prj2.umt:1:0">Project 2 A Pretty Printer</h1><p data-coord="prj2.umt:4:0"><strong data-coord="prj2.umt:4:0">Due Date</strong>: 10/8 by 11:59p
+</p><p data-coord="prj2.umt:6:0"><strong data-coord="prj2.umt:6:0">Important Reminder</strong>: As per the course Academic Honesty Statement,
+cheating of any kind will minimally result in receiving an F letter
+grade for the entire course.
+</p><section data-coord="prj2.umt:10:0"><h2 data-coord="prj2.umt:10:0">Aims of This Project</h2><p data-coord="prj2.umt:13:0">The aims of this project are as follows:
+</p><ul data-coord="prj2.umt:15:0"><li data-coord="prj2.umt:15:0"><p data-coord="prj2.umt:15:4">To familiarize you with ANTLR.
+</p></li><li data-coord="prj2.umt:17:0"><p data-coord="prj2.umt:17:4">To expose you to some of the issues involved in pretty-printing.
+</p></li></ul></section><section data-coord="prj2.umt:20:0"><h2 data-coord="prj2.umt:20:0">Project Specification</h2><p data-coord="prj2.umt:23:0">Create a <samp data-coord="prj2.umt:23:9">submit/prj2-sol</samp> folder in your gitlab project such that
+typing <samp data-coord="prj2.umt:23:74">make</samp> within that directory builds a <samp data-coord="prj2.umt:23:112">build/libs/prj2-sol.jar</samp>
+in that directory.  Running that jar using a command like:
+</p><pre data-coord="prj2.umt:29:0">   java -classpath "$HOME/cs572/lib/*:build/libs/*" \
+        Jpp &lt; TEST.decaf
+</pre><p data-coord="prj2.umt:33:0">will read a program written in the <a href="./files/decaf-syntax.pdf" data-coord="prj2.umt:33:63">decaf</a>
+subset of Java from standard input ( <samp data-coord="prj2.umt:33:106">TEST.decaf</samp> above) and print on
+standard error any syntax errors in that program.  If there are no
+syntax errors, it should pretty-print the program on standard output
+as follows.
+</p><ul data-coord="prj2.umt:39:0"><li data-coord="prj2.umt:39:0"><p data-coord="prj2.umt:39:4">No blank lines; an increasing indentation level is
+indicated by 2 additional spaces at the start of a line.
+</p></li><li data-coord="prj2.umt:42:0"><p data-coord="prj2.umt:42:4">Each class definition starts on a separate line at column 0.
+</p></li><li data-coord="prj2.umt:44:0"><p data-coord="prj2.umt:44:4">Class members should appear on a separate line at the next
+indentation level from their parent class.
+</p></li><li data-coord="prj2.umt:47:0"><p data-coord="prj2.umt:47:4">The starting brace <samp data-coord="prj2.umt:47:23">{</samp> of a block or class-body must appear at the
+end of the line containing its parent.  The terminating <samp data-coord="prj2.umt:47:131">}</samp> of the
+block or class-body must appear on a line by itself at the same
+indent as its parent.
+</p></li><li data-coord="prj2.umt:52:0"><p data-coord="prj2.umt:52:4">Each statement must start on a separate line at the
+appropriate level.
+</p></li><li data-coord="prj2.umt:55:0"><p data-coord="prj2.umt:55:4">Nested statements must appear at the next indentation level
+from their parent statement.
+</p></li><li data-coord="prj2.umt:58:0"><p data-coord="prj2.umt:58:4">The <samp data-coord="prj2.umt:58:8">else</samp> in a <em data-coord="prj2.umt:58:20">if-then-else</em> must appear on a separate line
+at the same indentation as the matching <samp data-coord="prj2.umt:58:110">if</samp>.
+</p></li><li data-coord="prj2.umt:61:0"><p data-coord="prj2.umt:61:4">No newlines other than those implied by the above rules.
+</p></li><li data-coord="prj2.umt:63:0"><p data-coord="prj2.umt:63:4">All tokens within a single line should be separated by a single
+space.
+</p></li><li data-coord="prj2.umt:66:0"><p data-coord="prj2.umt:66:4">Comments should be retained.  Each comment should appear on
+a separate line.  The start of the comment should be indented
+at the same indent as that of the following code.  The body of
+the comment should be identical to what occurs in the source,
+including whitespace (even if that messes up the pretty-printing).
+</p></li><li data-coord="prj2.umt:72:0"><p data-coord="prj2.umt:72:4">If the source contains a comment within a declaration or statement,
+then the pretty-printed comment should occur before the declaration
+or statement.
+</p></li></ul><p data-coord="prj2.umt:76:0">The grammar must enforce all the syntactic restrictions listed in
+the <a href="./files/decaf-syntax.pdf" data-coord="prj2.umt:76:98">decaf-syntax</a> document.  It is sufficient
+to merely use the error handling facilities provided by ANTLR.
+</p></section><section data-coord="prj2.umt:80:0"><h2 data-coord="prj2.umt:80:0">Provided Files</h2><p data-coord="prj2.umt:83:0">The <a href="./files/" data-coord="prj2.umt:83:16">files</a> directory provides the following:
+</p><dl data-coord="prj2.umt:85:0"><dt data-coord="prj2.umt:85:2"> <em data-coord="prj2.umt:85:29"><a href="./files/decaf-syntax.pdf" data-coord="prj2.umt:85:29">Decaf Syntax Specification</a></em></dt><dd data-coord="prj2.umt:86:0"><p data-coord="prj2.umt:86:4">The specification document for decaf syntax.  
+</p></dd><dt data-coord="prj2.umt:88:2"> <a href="./files/prj2-sol" data-coord="prj2.umt:88:20">Ant</a> project</dt><dd data-coord="prj2.umt:89:0"><p data-coord="prj2.umt:89:4">A <a href="https://ant.apache.org/" data-coord="prj2.umt:89:33">ant</a> project set up for this project.
+Some notable files:
+</p><dl data-coord="prj2.umt:92:0"><dt data-coord="prj2.umt:92:5"> <a href="./files/prj2-sol/Makefile" data-coord="prj2.umt:92:30">Makefile</a></dt><dd data-coord="prj2.umt:93:0"><p data-coord="prj2.umt:93:7">A wrapper which simply runs ant.  It also contains a <samp data-coord="prj2.umt:93:60">run</samp>
+target which allows running the <samp data-coord="prj2.umt:93:105">Jpp</samp> program with input
+taken from standard input.
+</p></dd><dt data-coord="prj2.umt:97:5"> <a href="./files/prj2-sol/build.xml" data-coord="prj2.umt:97:31">build.xml</a></dt><dd data-coord="prj2.umt:98:0"><p data-coord="prj2.umt:98:7">The build file for ant.  It is currently set up to build
+a listener for ANTLR.  If you want to change to build no
+listener or to build a visitor, please make changes in
+the <samp data-coord="prj2.umt:98:201">antlr</samp> target in this file (as per comments).
+</p></dd><dt data-coord="prj2.umt:103:5"> <a href="./files/prj2-sol/README" data-coord="prj2.umt:103:28">README</a></dt><dd data-coord="prj2.umt:104:0"><p data-coord="prj2.umt:104:7">You will need to edit this file to provide your id and other
+information.
+</p></dd><dt data-coord="prj2.umt:107:5"> <a href="./files/prj2-sol/src/main/antlr/Decaf.g4" data-coord="prj2.umt:107:45">Decaf.g4</a></dt><dd data-coord="prj2.umt:108:0"><p data-coord="prj2.umt:108:7">The grammar from the decaf syntactic specification converted
+to ANTLR syntax.  Note that the changes are minimal.
+</p></dd><dt data-coord="prj2.umt:111:5"> <a href="./files/prj2-sol/src/main/java/CountingErrorListener.java" data-coord="prj2.umt:111:62">CountingErrorListener.java</a></dt><dd data-coord="prj2.umt:112:0"><p data-coord="prj2.umt:112:7">A wrapper around ANTLR's error facilities which tracks the number
+of errors encountered.
+</p></dd><dt data-coord="prj2.umt:115:5"> <a href="./files/prj2-sol/src/main/java/Jpp.java" data-coord="prj2.umt:115:44">Jpp.java</a></dt><dd data-coord="prj2.umt:116:0"><p data-coord="prj2.umt:116:7">A skeleton file which provides a partial <samp data-coord="prj2.umt:116:48">main()</samp> function.  You
+will need to add code to this file.
+</p></dd><dt data-coord="prj2.umt:119:5"> <em data-coord="prj2.umt:119:28"><a href="./files/prj2-sol/decaf/" data-coord="prj2.umt:119:28">Decaf Test Files</a></em> </dt><dd data-coord="prj2.umt:120:0"><p data-coord="prj2.umt:120:7">A folder containing some decaf test files used in the
+log shown below.
+</p></dd></dl></dd></dl></section><section data-coord="prj2.umt:125:0"><h2 data-coord="prj2.umt:125:0">Log</h2><p data-coord="prj2.umt:128:0">A log of building and running the program is shown below:
+</p><pre data-coord="prj2.umt:131:0">$ cd prj2-sol
+$ make
+./gradlew build
+:generateGrammarSource
+:compileJavaNote: /home/umrigar/...
+Note: Recompile with -Xlint:deprecation for details.
+
+:processResources NO-SOURCE
+:classes
+:jar
+:startScripts
+:distTar
+:distZip
+:assemble
+:generateTestGrammarSource NO-SOURCE
+:compileTestJava NO-SOURCE
+:processTestResources NO-SOURCE
+:testClasses UP-TO-DATE
+:test NO-SOURCE
+:check UP-TO-DATE
+:build
+
+BUILD SUCCESSFUL in 2s
+6 actionable tasks: 6 executed
+$ make run &lt;decaf/Test1.decaf 
+java -cp '/home/umrigar/cs572/lib/*:build/libs/*' Jpp
+//Here is a comment
+/* additional comment */
+class T { 
+  public static void main ( ) {
+    return 0 ; 
+  } 
+} 
+$ make run &lt; decaf/Point.decaf
+java -cp '/home/umrigar/cs572/lib/*:build/libs/*' Jpp
+class Point { 
+  //x coordinate
+  private int _x ; 
+  //y coordinate
+  private int _y ; 
+  Point ( int x , int y ) {
+    _x = x ; 
+    _y = y ; 
+  } 
+  int getX ( ) {
+    return _x ; 
+  } 
+  int getY ( ) {
+    return _y ; 
+  } 
+  public int mag_square ( ) {
+    return _x * _x + _y * _y ; 
+  } 
+} 
+$ make run &lt; decaf/Statements.decaf
+java -cp '/home/umrigar/cs572/lib/*:build/libs/*' Jpp
+/* some comment */
+class Statements { 
+  int f ( int a , int a [ ] ) {
+    while ( x ) {
+      x = x + 1 ; 
+    } 
+    //another comment
+    if ( x ) {
+      a = b ; 
+    } 
+    /* else comment */
+    else 
+      while ( a ) 
+        /**/
+        if ( x ) 
+          f ( ) ; 
+  } 
+}
+$
+</pre></section><section data-coord="prj2.umt:208:0"><h2 data-coord="prj2.umt:208:0">Hints</h2><p data-coord="prj2.umt:212:0">The hints provided below are purely advisory.  You may choose to
+ignore some or all of them after reading them.
+</p><p data-coord="prj2.umt:215:2">0.  Review material on grammars, regular expressions and
+    <a href="http://www.antlr.org/" data-coord="prj2.umt:215:90">ANTLR.</a>
+</p><p data-coord="prj2.umt:218:2">1.  Copy the <em data-coord="prj2.umt:218:35"><a href="./files/prj2-sol" data-coord="prj2.umt:218:35">prj2-sol folder</a></em> over to your
+    working directory.  Your working environment should have ant and
+    jdk8 executables available on its path and have the course
+    directory available in your home directory (this is true on the
+    remote.cs machines).
+</p><p data-coord="prj2.umt:224:2">2.  The provided <a href="./files/prj2-sol/src/main/antlr/Decaf.g4" data-coord="prj2.umt:224:69">Decaf.g4</a> file is not acceptable to ANTLR (if you try to compile
+    the project as provided, you will get ANTLR errors).  Add
+    suitable lexical rules to the grammar and transform the grammar
+    to make it acceptable to ANTLR.  Send comments to a special
+    channel as in the labels example in the slides which uses
+    ANTLR's lexical channels.
+</p><p data-coord="prj2.umt:232:2">3.  Transform the grammar so as to make it enforce the specified syntax 
+    restrictions.  Test your grammar on syntactically invalid programs.
+</p><p data-coord="prj2.umt:235:2">4.  Decide on a strategy (listeners, visitors, grammar actions) for
+    pretty-printing and implement that strategy.  Note that the
+    provided ant build file <a href="./files/prj2-sol/build.xml" data-coord="prj2.umt:235:196">build.xml</a>
+    is currently set up to build a listener for ANTLR.  If you want
+    to change to build no listener or to build a visitor, please
+    make changes in the <samp data-coord="prj2.umt:235:369">antlr</samp> target in this file (as per
+    comments).
+</p><p data-coord="prj2.umt:243:6">The skeleton <a href="./files/prj2-sol/src/main/java/Jpp.java" data-coord="prj2.umt:243:62">Jpp.java</a>
+file has comments within <samp data-coord="prj2.umt:243:102">main()</samp> giving an approximation of the
+code needed to get started for each of the three strategies.
+</p><p data-coord="prj2.umt:247:6">Note that you will need to use
+<a href="http://www.antlr.org/api/Java/org/antlr/v4/runtime/ParserRuleContext.html" data-coord="prj2.umt:247:119">ParserRuleContext;</a>
+each specific grammar rule will have its own specific context
+which inherits from the ParserRuleContext (to distinguish among
+the different grammar rules for a non-terminal, you will need to
+label the grammar rules as in the examples covered in class).
+In this specific context, you will find accessors to get
+contexts for each of the grammar symbols of the rule RHS.  You
+will find the definitions for the specific contexts within the
+generated parser file in <samp data-coord="prj2.umt:247:647">build/java</samp>.
+</p><p data-coord="prj2.umt:259:2">5.  Add code to print out comments from the special channel where
+    they have been squirrelled away.
+</p><p data-coord="prj2.umt:262:2">6.  Iterate until all the project requirements have been met.
+</p></section><section data-coord="prj2.umt:265:0"><h2 data-coord="prj2.umt:265:0">Project Submission</h2><p data-coord="prj2.umt:268:0">Submit your project via gitlab:
+</p><ul data-coord="prj2.umt:270:0"><li data-coord="prj2.umt:270:0"><p data-coord="prj2.umt:270:4">Submit your project files in a top-level <samp data-coord="prj2.umt:270:45">submit/prj2-sol</samp>
+directory of your <samp data-coord="prj2.umt:270:85">cs572</samp> project in gitlab.
+</p></li><li data-coord="prj2.umt:273:0"><p data-coord="prj2.umt:273:4">You should <strong data-coord="prj2.umt:273:15">not</strong> submit executables, class files or object files.
+</p></li><li data-coord="prj2.umt:275:0"><p data-coord="prj2.umt:275:4">The <samp data-coord="prj2.umt:275:8">submit/prj2-sol</samp> should contain the <samp data-coord="prj2.umt:275:45">Makefile</samp> so that typing
+<samp data-coord="prj2.umt:275:75">make</samp> in that directory builds the <samp data-coord="prj2.umt:275:111">prj2-sol.jar</samp> in the
+<samp data-coord="prj2.umt:275:137">build/libs</samp> folder.
+</p></li><li data-coord="prj2.umt:279:0"><p data-coord="prj2.umt:279:4">Make sure that you edit the <samp data-coord="prj2.umt:279:32">README</samp> to provide
+your ID information by replacing the <samp data-coord="prj2.umt:279:93">XXXX</samp> entries.
+</p></li></ul><p data-coord="prj2.umt:282:0">If your project is incomplete on the due date, please add a file
+called <samp data-coord="prj2.umt:282:72">.LATE</samp> in your directory so that it will not be graded.
+Once the project has been completed late, please 
+<a href="mailto:tbabako1@binghamton.edu" data-coord="prj2.umt:282:213">email</a> the TA.
+</p></section><section data-coord="prj2.umt:288:0"><h2 data-coord="prj2.umt:288:0">References</h2><p data-coord="prj2.umt:291:0"><em data-coord="prj2.umt:291:24"><a href="http://www.antlr.org" data-coord="prj2.umt:291:24">ANTLR web site</a></em>.
+</p><p data-coord="prj2.umt:294:0"><em data-coord="prj2.umt:294:0"><a href="http://docs.oracle.com/javase/8/docs/api/overview-summary.html" data-coord="prj2.umt:294:0">Java 8 API</a></em>.
+</p></section></section>
+</div> <!-- #content -->
+</div> <!-- #main -->
+<div id="footer">&nbsp;</div>
+</div> <!-- #page -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../../assets/scripts/nav.js"></script>
+</body>
+</html>

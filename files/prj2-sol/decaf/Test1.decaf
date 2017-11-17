@@ -1,0 +1,2 @@
+//Here is a comment
+/* additional comment */ class T { public static void main() { return 0; } }
